@@ -30,13 +30,7 @@ class golang (
     path => '/usr/local/go/bin:/usr/local/bin:/usr/bin:/bin',
   }
 
-  if ! defined(Package['curl']) {
-    package { 'curl': }
-  }
-
-  if ! defined(Package['mercurial']) {
-    package { 'mercurial': }
-  }
+  ensure_packages(['curl','mercurial'], {'ensure' => 'present'})
 
   exec { 'download':
     command => "curl -o ${download_dir}/go-${version}.tar.gz ${download_location}",
